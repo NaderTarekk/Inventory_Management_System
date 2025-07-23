@@ -18,9 +18,16 @@ namespace InventoryManagementSystem.Application.Features.Products.Commands.Updat
 
         public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = _mapper.Map<Product>(request.productDto);
-            await _repo.UpdateAsync(product);
-            return Unit.Value;
+            try
+            {
+                var product = _mapper.Map<Product>(request.productDto);
+                await _repo.UpdateAsync(product);
+                return Unit.Value;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("حدث خطأ أثناء تعديل المنتج", ex);
+            }
         }
     }
 }

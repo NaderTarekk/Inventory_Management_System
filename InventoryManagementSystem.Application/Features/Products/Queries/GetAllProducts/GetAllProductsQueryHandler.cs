@@ -16,8 +16,15 @@ namespace InventoryManagementSystem.Application.Features.Products.Queries.GetAll
         }
         public async Task<List<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var products = await _repo.GetAllAsync();
-            return _mapper.Map<List<ProductDto>>(products);
+            try
+            {
+                var products = await _repo.GetAllAsync();
+                return _mapper.Map<List<ProductDto>>(products);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("حدث خطأ أثناء تحميل المنتجات", ex);
+            }
         }
     }
 }

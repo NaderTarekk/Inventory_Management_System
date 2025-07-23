@@ -16,9 +16,16 @@ namespace InventoryManagementSystem.Application.Features.Products.Queries.GetPro
         }
         public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
-            var getProduct = await _repo.GetByIdAsync(request.id);
-            var mapped = _mapper.Map<ProductDto>(getProduct);
-            return mapped;
+            try
+            {
+                var getProduct = await _repo.GetByIdAsync(request.id);
+                var mapped = _mapper.Map<ProductDto>(getProduct);
+                return mapped;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("حدث خطأ أثناء تحميل المنتج", ex);
+            }
         }
     }
 }
