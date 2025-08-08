@@ -9,5 +9,6 @@ namespace InventoryManagementSystem.Domain.Interfaces
         Task<Product?> GetByIdAsync(Guid id);
         Task UpdateAsync(Product product);
         Task DeleteAsync(Guid id);
+        Task ChangeIsActiveAsync(Guid id, bool activity);
     }
 }

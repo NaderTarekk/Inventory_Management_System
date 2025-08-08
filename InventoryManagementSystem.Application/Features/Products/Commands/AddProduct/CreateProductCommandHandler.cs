@@ -20,7 +20,7 @@ namespace InventoryManagementSystem.Application.Features.Products.Commands.AddPr
             try
             {
                 var mappedProduct = _mapper.Map<Product>(request.productDto);
-                mappedProduct.CreatedAt = DateTime.UtcNow;
+                mappedProduct.CreatedAt = DateTime.Now;
                 await _repo.CreateAsync(mappedProduct);
 
                 return Unit.Value;

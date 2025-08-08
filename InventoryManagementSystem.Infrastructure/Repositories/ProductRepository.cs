@@ -13,6 +13,14 @@ namespace InventoryManagementSystem.Infrastructure.Repositories
             _ctx = ctx;
         }
 
+        public async Task ChangeIsActiveAsync(Guid id, bool activity)
+        {
+            var product = _ctx.TbProducts.Find(id);
+            product.IsActive = activity;
+            _ctx.TbProducts.Update(product);
+            await _ctx.SaveChangesAsync();
+        }
+
         public async Task CreateAsync(Product product)
         {
             await _ctx.TbProducts.AddAsync(product);

@@ -21,6 +21,7 @@ namespace InventoryManagementSystem.Application.Features.Products.Commands.Updat
             try
             {
                 var product = _mapper.Map<Product>(request.productDto);
+                product.UpdatedAt = DateTime.Now;
                 await _repo.UpdateAsync(product);
                 return Unit.Value;
             }
