@@ -4,6 +4,9 @@ using InventoryManagementSystem.Application.Features.Categories.Commands.UpdateC
 using InventoryManagementSystem.Application.Features.Categories.DTOs;
 using InventoryManagementSystem.Application.Features.Categories.Queries.GetAllCategories;
 using InventoryManagementSystem.Application.Features.Categories.Queries.GetCategoryById;
+using InventoryManagementSystem.Application.Features.Categories.Queries.GetProductsByCategoryId;
+using InventoryManagementSystem.Application.Features.Products.Queries.GetProductById;
+using InventoryManagementSystem.Domain.Entities;
 using InventoryManagementSystem.Infrastructure.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,21 +26,24 @@ namespace InventoryManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> Create([FromBody] CategoryDto cmd)
+        public async Task<ActionResult<Guid>> Create([FromBody] string name)
         {
-            var result = await _mediator.Send(new CreateCategoryCommand(cmd));
-            return Ok(result);
+            if (string.IsNullOrWhiteSpace(name))
+                return BadRequest("Name is required.");
+
+            var result = await _mediator.Send(new CreateCategoryCommand(name.Trim()));
+            return Ok(result); 
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Guid>> Delete(int id)
+        public async Task<ActionResult<int>> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteCategoryCommand(id));
             return Ok(result);
         }
 
         [HttpPut]
-        public async Task<ActionResult<Guid>> Update([FromForm] CategoryDto data)
+        public async Task<ActionResult<int>> Update([FromForm] CategoryDto data)
         {
             var result = await _mediator.Send(new UpdateCategoryCommand(data));
             return Ok(result);
@@ -51,7 +57,14 @@ namespace InventoryManagementSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<CategoryDto>> GetById(int id)
+        public async Task<ActionResult<List<Product>>> GetProductsByCategoryId([FromQuery] int id)
+        {
+            var result = await _mediator.Send(new GetProductsByCategoryQuery(id));
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<CategoryDto>> GetById( int id)
         {
             var result = await _mediator.Send(new GetCategoryByIdQuery(id));
             return Ok(result);

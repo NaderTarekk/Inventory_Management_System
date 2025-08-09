@@ -5,10 +5,8 @@ using InventoryManagementSystem.Application.Features.Products.Commands.DTOs;
 using InventoryManagementSystem.Application.Features.Products.Commands.UpdateProduct;
 using InventoryManagementSystem.Application.Features.Products.Queries.GetAllProducts;
 using InventoryManagementSystem.Application.Features.Products.Queries.GetProductById;
-using InventoryManagementSystem.Domain.Entities;
 using InventoryManagementSystem.Infrastructure.Models;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagementSystem.Controllers
@@ -74,9 +72,9 @@ namespace InventoryManagementSystem.Controllers
                     await image.CopyToAsync(stream);
                 }
                 imageUrl = $"/images/{fileName}";
+                data.ImageUrl = imageUrl;
             }
 
-            data.ImageUrl = imageUrl;
             var result = await _mediator.Send(new UpdateProductCommand(data));
             return Ok(result);
         }

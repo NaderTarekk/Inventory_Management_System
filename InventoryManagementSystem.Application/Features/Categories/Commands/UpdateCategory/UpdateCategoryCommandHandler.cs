@@ -27,7 +27,7 @@ namespace InventoryManagementSystem.Application.Features.Categorys.Commands.Upda
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("حدث خطأ أثناء تعديل المنتج", ex);
+                throw new ApplicationException("Failed to update category!", ex);
             }
         }
     }

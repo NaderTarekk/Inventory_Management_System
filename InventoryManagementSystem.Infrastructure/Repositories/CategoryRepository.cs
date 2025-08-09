@@ -1,6 +1,7 @@
 ﻿using InventoryManagementSystem.Domain.Entities;
 using InventoryManagementSystem.Domain.Interfaces;
 using InventoryManagementSystem.Infrastructure.Models;
+using System.Data.Entity;
 
 namespace InventoryManagementSystem.Infrastructure.Repositories
 {
@@ -12,9 +13,10 @@ namespace InventoryManagementSystem.Infrastructure.Repositories
             _ctx = ctx;
         }
 
-        public async Task CreateAsync(Category category)
+        public async Task CreateAsync(string name)
         {
-            await _ctx.TbCategories.AddAsync(category);
+            var obj = new Category { Name = name };
+            await _ctx.TbCategories.AddAsync(obj);
             await _ctx.SaveChangesAsync();
         }
 
@@ -33,6 +35,12 @@ namespace InventoryManagementSystem.Infrastructure.Repositories
         }
 
         public async Task<Category?> GetByIdAsync(int id) => await _ctx.TbCategories.FindAsync(id);
+
+        public async Task<List<Product>> GetProductsByCategoryId(int id)
+        {
+            var result = _ctx.TbProducts.Where(p => p.CategoryId == id).ToList();
+            return result;
+        }
 
         public async Task UpdateAsync(Category category)
         {

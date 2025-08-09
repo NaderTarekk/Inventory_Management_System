@@ -19,8 +19,7 @@ namespace InventoryManagementSystem.Application.Features.Categories.Commands.Add
         {
             try
             {
-                var mappedCategory = _mapper.Map<Category>(request.CategoryDto);
-                await _repo.CreateAsync(mappedCategory);
+                await _repo.CreateAsync(request.name);
 
                 return Unit.Value;
             }
