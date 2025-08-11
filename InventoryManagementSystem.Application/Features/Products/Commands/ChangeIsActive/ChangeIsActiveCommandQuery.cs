@@ -3,10 +3,10 @@ using MediatR;
 
 namespace InventoryManagementSystem.Application.Features.Products.Commands.ChangeIsActive
 {
-    public class ChangeIsActiveCommandQuery : IRequestHandler<ChangeIsActiveCommand, Unit>
+    public class ChangeIsActiveCommandHandler : IRequestHandler<ChangeIsActiveCommand, Unit>
     {
         private readonly IProductRepository _repo;
-        public ChangeIsActiveCommandQuery(IProductRepository repo)
+        public ChangeIsActiveCommandHandler(IProductRepository repo)
         {
             _repo = repo;
         }

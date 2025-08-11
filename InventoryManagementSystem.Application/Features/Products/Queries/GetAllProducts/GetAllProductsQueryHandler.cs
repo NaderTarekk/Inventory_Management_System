@@ -5,11 +5,11 @@ using MediatR;
 
 namespace InventoryManagementSystem.Application.Features.Products.Queries.GetAllProducts
 {
-    public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, List<ProductDto>>
+    public class GetAllUsersQueryHandler : IRequestHandler<GetAllProductsQuery, List<ProductDto>>
     {
         private readonly IProductRepository _repo;
         private readonly IMapper _mapper;
-        public GetAllProductsQueryHandler(IProductRepository repo, IMapper mapper)
+        public GetAllUsersQueryHandler(IProductRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;
