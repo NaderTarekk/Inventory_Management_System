@@ -1,4 +1,5 @@
-﻿using InventoryManagementSystem.Domain.Entities;
+﻿using InventoryManagementSystem.Domain.DTOs;
+using InventoryManagementSystem.Domain.Entities;
 
 namespace InventoryManagementSystem.Domain.Interfaces
 {
@@ -10,5 +11,7 @@ namespace InventoryManagementSystem.Domain.Interfaces
         Task UpdateAsync(User user);
         Task DeleteAsync(Guid id);
         Task ChangeIsActiveAsync(Guid id, bool activity);
+        Task<bool> CheckEmailIsExistAsync(string email);
+        Task<string> LoginAsync(LoginUserDto user);
     }
 }

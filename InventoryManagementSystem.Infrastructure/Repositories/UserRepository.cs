@@ -1,4 +1,5 @@
-﻿using InventoryManagementSystem.Domain.Entities;
+﻿using InventoryManagementSystem.Domain.DTOs;
+using InventoryManagementSystem.Domain.Entities;
 using InventoryManagementSystem.Domain.Interfaces;
 using InventoryManagementSystem.Infrastructure.Models;
 using System.Data.Entity;
@@ -21,6 +22,12 @@ namespace InventoryManagementSystem.Infrastructure.Repositories
             await _ctx.SaveChangesAsync();
         }
 
+        public async Task<bool> CheckEmailIsExistAsync(string email)
+        {
+            var result = _ctx.TbUsers.FirstOrDefault(user => user.Email == email);
+            return result != null;
+        }
+
         public async Task CreateAsync(User user)
         {
             var roleId = Guid.Parse("0002ccee-99e5-455a-dc8b-08ddd8fa90fe");
@@ -39,6 +46,14 @@ namespace InventoryManagementSystem.Infrastructure.Repositories
         public List<User> GetAllAsync() => _ctx.TbUsers.ToList();
 
         public async Task<User?> GetByIdAsync(Guid id) => await _ctx.TbUsers.FindAsync(id);
+
+        public async Task<string> LoginAsync(LoginUserDto user)
+        {
+            var result = _ctx.TbUsers.Include(r => r.Role).FirstOrDefault(u => u.Email == user.Email);
+            if (result == null || result.Password != user.Password)
+                return "Invalid email or password.";
+            return result.Role.RoleName;
+        }
 
         public async Task UpdateAsync(User user)
         {

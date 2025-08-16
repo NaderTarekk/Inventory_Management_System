@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using InventoryManagementSystem.Application.Features.Users.Commands.DTOs;
 using InventoryManagementSystem.Domain.Entities;
 using InventoryManagementSystem.Domain.Interfaces;
 using MediatR;

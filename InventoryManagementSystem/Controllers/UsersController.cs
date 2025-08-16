@@ -3,8 +3,11 @@ using InventoryManagementSystem.Application.Features.Users.Commands.AddUser;
 using InventoryManagementSystem.Application.Features.Users.Commands.ChangeUserIsActive;
 using InventoryManagementSystem.Application.Features.Users.Commands.DTOs;
 using InventoryManagementSystem.Application.Features.Users.Commands.UpdateUser;
+using InventoryManagementSystem.Application.Features.Users.Queries.CheckExistEmail;
 using InventoryManagementSystem.Application.Features.Users.Queries.GetAllUsers;
 using InventoryManagementSystem.Application.Features.Users.Queries.GetUserById;
+using InventoryManagementSystem.Application.Features.Users.Queries.LoginUser;
+using InventoryManagementSystem.Domain.DTOs;
 using InventoryManagementSystem.Infrastructure.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +66,20 @@ namespace InventoryManagementSystem.Controllers
         {
             var result = await _mediator.Send(new GetUserByIdQuery(id));
             return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<UserDto>> CheckExistEmail(string email)
+        {
+            var result = await _mediator.Send(new CheckExistEmailQuery(email));
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<string>> Login([FromBody] LoginUserDto user)
+        {
+            var result = await _mediator.Send(new LoginUserQuery(user));
+            return Ok(new { role = result });
         }
     }
 }
